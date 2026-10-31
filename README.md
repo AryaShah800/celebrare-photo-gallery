@@ -62,4 +62,3 @@ Repository: https://github.com/AryaShah800/celebrare-photo-gallery. The recordin
 - https://vite.dev/guide/
 - https://tailwindcss.com/docs/installation/using-vite
 - https://picsum.photos/
-

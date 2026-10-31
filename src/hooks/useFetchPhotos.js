@@ -34,5 +34,3 @@ export default function useFetchPhotos() {
 
   return { photos, loading, error };
 }
-
-
