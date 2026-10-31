@@ -40,4 +40,3 @@ The fetch hook checks the HTTP response and photo data, displays an error if eit
 
 [GitHub repository](https://github.com/AryaShah800/celebrare-photo-gallery) · [Live demo](https://aryashah800.github.io/celebrare-photo-gallery/)
 
-The assignment also requires a five-minute screen recording explaining the app and code. Submit the repository and recording links through the form provided by Celebrare.
