@@ -2,6 +2,10 @@
 
 A focused React internship assignment: 30 Picsum photographs, live author search, and persistent favourites. Built from scratch with functional React components, Vite and Tailwind CSS. No UI component library.
 
+## Live demo
+
+[Open the photo gallery](https://aryashah800.github.io/celebrare-photo-gallery/)
+
 ## Run
 
 Use Node.js 22.12+ (tested with 22.20.0).
@@ -62,3 +66,4 @@ Repository: https://github.com/AryaShah800/celebrare-photo-gallery. The recordin
 - https://vite.dev/guide/
 - https://tailwindcss.com/docs/installation/using-vite
 - https://picsum.photos/
+
