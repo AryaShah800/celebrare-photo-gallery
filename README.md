@@ -2,7 +2,17 @@
 
 A responsive photo gallery built with React, Vite, and Tailwind CSS for the Celebrare frontend internship assignment. It loads 30 photos from Picsum, filters them by author, and saves favourites in the browser.
 
+[![Deploy](https://github.com/AryaShah800/celebrare-photo-gallery/actions/workflows/deploy.yml/badge.svg)](https://github.com/AryaShah800/celebrare-photo-gallery/actions/workflows/deploy.yml)
+
 **[View the live demo](https://aryashah800.github.io/celebrare-photo-gallery/)**
+
+## Features
+
+- Loads 30 photos from Picsum with loading and error states
+- Live, case-insensitive search by author
+- Favourites that persist across reloads (`useReducer` + `localStorage`)
+- Responsive grid: 1 column on mobile, 2 from 768px, 4 from 1024px
+- Unit tests for fetching, search and favourite persistence
 
 ## Run locally
 
@@ -20,7 +30,7 @@ npm test
 npm run build
 ```
 
-## Requirements
+## How it meets the assignment brief
 
 | Requirement | Implementation |
 | --- | --- |
@@ -36,6 +46,6 @@ The grid shows one column on mobile, two from 768px, and four from 1024px. Searc
 
 The fetch hook checks the HTTP response and photo data, displays an error if either fails, and aborts the request when the component unmounts. The tests cover loading, errors, search, favourites, and storage edge cases.
 
-## Submission
+## License
 
-[GitHub repository](https://github.com/AryaShah800/celebrare-photo-gallery) · [Live demo](https://aryashah800.github.io/celebrare-photo-gallery/)
+MIT. See [LICENSE](LICENSE). Photos are served by [Picsum](https://picsum.photos/).
