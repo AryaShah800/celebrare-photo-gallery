@@ -1,13 +1,19 @@
 import { useCallback, useMemo, useReducer, useState } from 'react';
 import useFetchPhotos from '../hooks/useFetchPhotos';
+import useInfiniteScroll from '../hooks/useInfiniteScroll';
 import { FAVOURITES_KEY, favouritesReducer, readFavourites } from '../state/favourites';
 import PhotoCard from './PhotoCard';
 
+const retryButton = 'mt-3 cursor-pointer rounded-full border border-stone-300 bg-white px-5 py-2.5 text-sm font-medium text-stone-800 hover:border-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-800';
+
 export default function Gallery() {
-  const { photos, loading, error } = useFetchPhotos();
+  const { photos, loading, error, hasMore, loadMore, retry } = useFetchPhotos();
   const [search, setSearch] = useState('');
   const [favourites, dispatch] = useReducer(favouritesReducer, undefined, readFavourites);
   const [storageError, setStorageError] = useState(false);
+  const searching = search.trim() !== '';
+  // Picsum has no search endpoint, so auto-loading pauses while a search filters the loaded photos.
+  const sentinelRef = useInfiniteScroll(loadMore, hasMore && !loading && !error && !searching);
 
   const handleSearch = useCallback(event => setSearch(event.target.value), []);
   const filteredPhotos = useMemo(() => {
@@ -46,13 +52,16 @@ export default function Gallery() {
           </div>
         </div>
         {storageError && <p role="alert" className="mb-6 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">Your browser couldn’t save favourites. They will only last until you refresh.</p>}
-        {loading ? (
+        {photos.length === 0 && loading ? (
           <div role="status" className="flex min-h-64 flex-col items-center justify-center gap-4 text-sm text-stone-500">
             <span aria-hidden="true" className="size-8 animate-spin rounded-full border-2 border-stone-200 border-t-emerald-800 motion-reduce:animate-none" />
             Loading photographs…
           </div>
-        ) : error ? (
-          <p role="alert" className="rounded-xl border border-red-200 bg-red-50 p-6 text-red-800">{error}</p>
+        ) : photos.length === 0 && error ? (
+          <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-red-800">
+            <p role="alert">{error}</p>
+            <button type="button" onClick={retry} className={retryButton}>Try again</button>
+          </div>
         ) : (
           <>
             <div className="mb-5 flex items-center justify-between text-xs text-stone-500">
@@ -66,6 +75,26 @@ export default function Gallery() {
                 {filteredPhotos.map(photo => <PhotoCard key={photo.id} photo={photo} favourite={favourites.includes(photo.id)} onToggle={toggleFavourite} />)}
               </div>
             )}
+            <div className="mt-10 flex min-h-12 flex-col items-center justify-center gap-3 text-center text-sm text-stone-500">
+              {loading ? (
+                <p role="status" className="flex items-center gap-3">
+                  <span aria-hidden="true" className="size-5 animate-spin rounded-full border-2 border-stone-200 border-t-emerald-800 motion-reduce:animate-none" />
+                  Loading more photographs…
+                </p>
+              ) : error ? (
+                <>
+                  <p role="alert" className="text-red-800">{error}</p>
+                  <button type="button" onClick={retry} className={retryButton}>Try again</button>
+                </>
+              ) : !hasMore ? (
+                <p>You’ve reached the end of the collection.</p>
+              ) : searching ? (
+                <p>Showing matches from the {photos.length} photographs loaded so far. Clear the search to load more.</p>
+              ) : (
+                <button type="button" onClick={loadMore} className={retryButton}>Load more photographs</button>
+              )}
+            </div>
+            {hasMore && <div ref={sentinelRef} aria-hidden="true" data-testid="scroll-sentinel" className="h-px" />}
           </>
         )}
         <footer className="mt-12 border-t border-stone-200 pt-6 text-xs text-stone-500">Photographs from Picsum. A collection of different perspectives.</footer>
