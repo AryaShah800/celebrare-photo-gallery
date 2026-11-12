@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
+import { useCallback, useMemo, useReducer, useState } from 'react';
 import useFetchPhotos from '../hooks/useFetchPhotos';
 import { FAVOURITES_KEY, favouritesReducer, readFavourites } from '../state/favourites';
 import PhotoCard from './PhotoCard';
@@ -9,15 +9,6 @@ export default function Gallery() {
   const [favourites, dispatch] = useReducer(favouritesReducer, undefined, readFavourites);
   const [storageError, setStorageError] = useState(false);
 
-  useEffect(() => {
-    try {
-      localStorage.setItem(FAVOURITES_KEY, JSON.stringify(favourites));
-      setStorageError(false);
-    } catch {
-      setStorageError(true);
-    }
-  }, [favourites]);
-
   const handleSearch = useCallback(event => setSearch(event.target.value), []);
   const filteredPhotos = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -25,7 +16,14 @@ export default function Gallery() {
   }, [photos, search]);
 
   function toggleFavourite(id) {
-    dispatch({ type: 'toggle', id });
+    const action = { type: 'toggle', id };
+    dispatch(action);
+    try {
+      localStorage.setItem(FAVOURITES_KEY, JSON.stringify(favouritesReducer(favourites, action)));
+      setStorageError(false);
+    } catch {
+      setStorageError(true);
+    }
   }
 
   return (
