@@ -25,7 +25,7 @@ describe('Gallery requirements', () => {
     const fetchMock = mockPhotos();
     render(<Gallery />);
     await screen.findByText('Alice Brown');
-    expect(fetchMock).toHaveBeenCalledWith('https://picsum.photos/v2/list?limit=30', expect.any(Object));
+    expect(fetchMock).toHaveBeenCalledWith('https://picsum.photos/v2/list?page=1&limit=30', expect.any(Object));
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: ' ALICE ' } });
     expect(screen.getByText('Alice Brown')).toBeInTheDocument();
     expect(screen.queryByText('Ben Smith')).not.toBeInTheDocument();
