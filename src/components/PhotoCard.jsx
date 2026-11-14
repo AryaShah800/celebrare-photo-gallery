@@ -1,12 +1,20 @@
-export default function PhotoCard({ photo, favourite, onToggle }) {
+export default function PhotoCard({ photo, favourite, onToggle, onOpen, thumbRef }) {
   return (
     <article className="overflow-hidden rounded-2xl border border-stone-200 bg-white">
-      <img
-        src={`https://picsum.photos/id/${encodeURIComponent(photo.id)}/640/480`}
-        alt={`Photograph by ${photo.author}`}
-        width="640" height="480" loading="lazy"
-        className="aspect-[4/3] w-full bg-stone-100 object-cover"
-      />
+      <button
+        ref={thumbRef}
+        type="button"
+        onClick={() => onOpen(photo.id)}
+        aria-label={`Open photograph by ${photo.author}`}
+        className="block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-emerald-800"
+      >
+        <img
+          src={`https://picsum.photos/id/${encodeURIComponent(photo.id)}/640/480`}
+          alt={`Photograph by ${photo.author}`}
+          width="640" height="480" loading="lazy"
+          className="aspect-[4/3] w-full bg-stone-100 object-cover"
+        />
+      </button>
       <div className="flex items-center justify-between gap-3 p-4">
         <div className="min-w-0">
           <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-500">Photograph by</p>
