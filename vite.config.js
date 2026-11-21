@@ -5,5 +5,5 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   base: '/celebrare-photo-gallery/',
   plugins: [react(), tailwindcss()],
-  test: { environment: 'jsdom', setupFiles: './tests/setup.js' },
+  test: { environment: 'jsdom', setupFiles: './tests/setup.js', exclude: ['e2e/**', 'node_modules/**'] },
 });

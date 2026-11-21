@@ -24,7 +24,7 @@ export default [
     },
   },
   {
-    files: ['tests/**/*.{js,jsx}'],
+    files: ['tests/**/*.{js,jsx}', 'e2e/**/*.js', 'playwright.config.js'],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
   },
 ];

@@ -1,0 +1,11 @@
+{
+  "name": "Celebrare Photo Gallery",
+  "short_name": "Celebrare",
+  "description": "A photo gallery that keeps working offline for photographs you have already viewed.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#faf9f6",
+  "theme_color": "#faf9f6",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
