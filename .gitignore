@@ -8,3 +8,6 @@ tmp/
 .env.*
 !.env.example
 *.log
+playwright-report/
+test-results/
+lighthouse-*.json

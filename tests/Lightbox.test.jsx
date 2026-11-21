@@ -24,7 +24,7 @@ describe('Lightbox', () => {
     const dialog = screen.getByRole('dialog', { name: 'Photograph by Ben Smith' });
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(within(dialog).getByText('2 of 3')).toBeInTheDocument();
-    expect(within(dialog).getByRole('img')).toHaveAttribute('src', 'https://picsum.photos/id/2/1280/960');
+    expect(within(dialog).getByRole('img')).toHaveAttribute('src', 'https://picsum.photos/id/2/1600/1200');
     expect(within(dialog).getByRole('button', { name: 'Close' })).toHaveFocus();
     expect(screen.getByRole('searchbox').closest('[inert]')).not.toBeNull();
     expect(document.body.style.overflow).toBe('hidden');
