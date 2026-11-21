@@ -37,3 +37,11 @@ export function layoutColumns(photos, count) {
 
 export const picsumSrc = (id, width, ratio) =>
   `https://picsum.photos/id/${encodeURIComponent(id)}/${width}/${Math.round(width * ratio)}`;
+
+/** The photo at its real aspect ratio (4:3 when unknown), long side capped at 1600 px. */
+export function lightboxSize(photo, max = 1600) {
+  const ratio = photo.width > 0 && photo.height > 0 ? photo.height / photo.width : 0.75;
+  return ratio >= 1
+    ? { width: Math.round(max / ratio), height: max }
+    : { width: max, height: Math.round(max * ratio) };
+}

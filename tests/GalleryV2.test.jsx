@@ -104,7 +104,7 @@ describe('shareable URL', () => {
 });
 
 describe('favourites collection', () => {
-  it('opens a shared favourites link on a fresh visit by fetching photographers it has not loaded', async () => {
+  it('opens the favourites view in a fresh session by fetching photographers it has not loaded', async () => {
     window.history.replaceState(null, '', '/?view=favourites');
     localStorage.setItem(FAVOURITES_KEY, JSON.stringify(['77']));
     const fetchMock = mockApi({ 77: { id: '77', author: 'Zed Young', width: 800, height: 600 } });
@@ -154,5 +154,17 @@ describe('offline notice', () => {
     expect(await screen.findByText(/You are offline/)).toBeInTheDocument();
     fireEvent(window, new Event('online'));
     await waitFor(() => expect(screen.queryByText(/You are offline/)).not.toBeInTheDocument());
+  });
+});
+
+describe('lightbox', () => {
+  it('opens a portrait photograph at its real aspect ratio, not a 4:3 crop', async () => {
+    mockApi();
+    render(<Gallery />);
+    await screen.findByText('Ben Smith');
+    fireEvent.click(open('Ben Smith'));
+    const image = screen.getByRole('dialog').querySelector('img');
+    expect(image.getAttribute('src')).toBe('https://picsum.photos/id/2/1067/1600');
+    expect(Number(image.getAttribute('height'))).toBeGreaterThan(Number(image.getAttribute('width')));
   });
 });

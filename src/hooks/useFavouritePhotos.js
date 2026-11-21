@@ -4,7 +4,7 @@ const infoUrl = id => `https://picsum.photos/id/${encodeURIComponent(id)}/info`;
 
 /**
  * Photo records for the saved ids, in saved order. Ids already loaded in the gallery are reused;
- * the rest are fetched from Picsum's per-photo info endpoint (so a shared favourites link works on a fresh visit).
+ * the rest are fetched from Picsum's per-photo info endpoint (so the favourites view works in a fresh session, before any photo list has loaded).
  */
 export default function useFavouritePhotos(ids, loadedPhotos, enabled) {
   const [fetched, setFetched] = useState({});

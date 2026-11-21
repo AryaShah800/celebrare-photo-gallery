@@ -75,7 +75,7 @@ test('search and view are in the URL, survive a reload and work from a shared li
   await expect(page.getByRole('button', { name: /^Favourites/ })).toHaveAttribute('aria-pressed', 'true');
 });
 
-test('favourites can be exported and imported as JSON, and a shared favourites link loads them', async ({ page, browser }) => {
+test('favourites can be exported and imported as JSON, and the import shows them in a fresh profile', async ({ page, browser }) => {
   await page.goto('./');
   await expect(firstThumb(page)).toBeVisible();
   await firstThumb(page).focus();

@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { lightboxSize } from '../lib/masonry';
 
 const FOCUSABLE = 'button, a[href], [tabindex]:not([tabindex="-1"])';
 const navButton = 'flex size-12 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white aria-disabled:cursor-not-allowed aria-disabled:opacity-30 aria-disabled:hover:bg-white/10';
@@ -8,6 +9,7 @@ export default function Lightbox({ photo, index, total, onClose, onPrevious, onN
   const dialogRef = useRef(null);
   const closeRef = useRef(null);
   const titleId = useId();
+  const size = lightboxSize(photo);
   const hasPrevious = index > 0;
   const hasNext = index < total - 1;
 
@@ -78,9 +80,9 @@ export default function Lightbox({ photo, index, total, onClose, onPrevious, onN
         </button>
         <img
           key={photo.id}
-          src={`https://picsum.photos/id/${encodeURIComponent(photo.id)}/1280/960`}
+          src={`https://picsum.photos/id/${encodeURIComponent(photo.id)}/${size.width}/${size.height}`}
           alt={`Photograph by ${photo.author}`}
-          width="1280" height="960"
+          width={size.width} height={size.height}
           className="max-h-full min-w-0 max-w-full flex-1 rounded-lg bg-stone-800 object-contain"
         />
         <button type="button" onClick={hasNext ? onNext : undefined} aria-disabled={!hasNext} aria-label="Next photo" className={`${navButton} shrink-0`}>
